@@ -1,6 +1,6 @@
 use std::fs;
 
-pub fn day_one_f() {
+pub fn day_one_s() {
     let input = fs::read_to_string("./../input/dayOne.txt").expect("Couldn't find file");
     let mut left: Vec<i64> = Vec::new();
     let mut right: Vec<i64> = Vec::new();
@@ -19,23 +19,21 @@ pub fn day_one_f() {
         }
     }
     left.sort();
+    left.dedup();
     right.sort();
-    let mut i: usize = 0;
     let mut sum: i64 = 0;
-    loop {
-        let li = left[i];
-        let ri = right[i];
-        let si = li - ri;
-        if si > 0 {
-            sum += si;
-        } else {
-            sum += si * -1;
+    for un in left {
+        let mut i: usize = 0;
+        loop {
+            let ri = right[i];
+            i += 1;
+            if ri == un {
+                sum += un;
+            }
+            if i >= right.len() {
+                break;
+            }
         }
-        i += 1;
-        if i >= left.len() {
-            break;
-        }
-        println!("{i}");
     }
     println!("{}", sum);
 }
